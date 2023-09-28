@@ -27,8 +27,44 @@ public class Machine_Functions {
     int attemp = 0;
 
     LinkedList<Machine> new_MachineData = new LinkedList<Machine>();
+    LinkedList<Drinks> new_drinksData = new LinkedList<Drinks>();
+    
+    class Drinks{
+        String drink_name;
+        int drink_price;
 
-    class Machine implements Comparable<Machine> {
+        Drinks(String name,int price){
+            this.drink_name = name;
+            this.drink_price = price;
+        }
+
+        public String getDrink_name() {
+            return drink_name;
+        }
+
+        public int getDrink_price() {
+            return drink_price;
+        }
+    }
+
+    void add_DrinksData(File datafile) throws FileNotFoundException {
+        try (Scanner DrinksData_input = new Scanner(datafile)) {
+            //String string_temp;
+            while (DrinksData_input.hasNext()) {
+                
+            }
+        }
+    }
+
+    void show_drinks_menu(){
+
+    }
+
+    void printDrinksData(){
+
+    }
+    
+    class Machine{
         String machine_id;
         String machine_city;
         String machine_position;
@@ -62,18 +98,6 @@ public class Machine_Functions {
         public String getMachine_position() {
             return machine_position;
         }
-
-        @Override
-        public int compareTo(Machine temp) {
-            if (machine_balance > temp.machine_balance) {
-                return 1;
-            } else if (machine_balance == temp.machine_balance) {
-                return 0;
-            } else {
-                return -1;
-            }
-        }
-
     }
 
     void add_newMachineData(File datafile) throws FileNotFoundException {
@@ -91,6 +115,7 @@ public class Machine_Functions {
     }
 
     void printMachineData_sortBlance() {
+        Collections.sort(new_MachineData, (o1, o2) -> o1.getMachine_balance() - o2.getMachine_balance());
         Collections.sort(new_MachineData, Collections.reverseOrder());
         show_info();
         String shippingType = "";
@@ -258,20 +283,19 @@ public class Machine_Functions {
     }
 
     void addMoreUser() throws FileNotFoundException {
-        Scanner input = new Scanner(System.in);
         int id = 0;
         System.out.print("Enter Name : ");
-        String first_name = input.nextLine();
+        String first_name = keyboard_input.next();
         System.out.print("Enter Last Name : ");
-        String last_name = input.nextLine();
+        String last_name = keyboard_input.next();
         System.out.print("Enter Email : ");
-        String email = input.nextLine();
+        String email = keyboard_input.next();
         System.out.print("Enter Password : ");
-        String passwordd = input.nextLine();
+        String passwordd = keyboard_input.next();
         System.out.print("Confirm Password : ");
-        String confirm_password = input.nextLine();
+        String confirm_password = keyboard_input.next();
         System.out.print("Telephone number : ");
-        String telephonee = input.next();
+        String telephonee = keyboard_input.next();
         File line_input_ID = new File("C:\\Code\\PSP T_Apisit\\New_SEDrinks_copy\\Login.txt");
         Scanner input_ID = new Scanner(line_input_ID);
 
@@ -347,6 +371,8 @@ public class Machine_Functions {
             System.out.println("------------------------");
             System.out.print("The user additonal failed");
         }
+
+        input_ID.close();
     }
 
     void format_userData() {
