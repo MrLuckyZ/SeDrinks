@@ -28,43 +28,261 @@ public class Machine_Functions {
 
     LinkedList<Machine> new_MachineData = new LinkedList<Machine>();
     LinkedList<Drinks> new_drinksData = new LinkedList<Drinks>();
-    
-    class Drinks{
-        String drink_name;
-        int drink_price;
+    LinkedList<Order> new_ordeDrinks = new LinkedList<Order>();
 
-        Drinks(String name,int price){
-            this.drink_name = name;
-            this.drink_price = price;
+    class Drinks {
+        String drink_ID;
+        String drink_name;
+        String drink_price;
+        String age;
+        String gender;
+        String drink_type;
+        String keyword;
+
+        Drinks(String drink_ID, String drink_name, String drink_price, String age, String gender, String drink_type,
+                String keyword) {
+            this.drink_ID = drink_ID;
+            this.drink_name = drink_name;
+            this.drink_price = drink_price;
+            this.age = age;
+            this.gender = gender;
+            this.drink_type = drink_type;
+            this.keyword = keyword;
+
+        }
+
+        public String getDrink_ID() {
+            return drink_ID;
         }
 
         public String getDrink_name() {
             return drink_name;
         }
 
-        public int getDrink_price() {
+        public String getAge() {
+            return age;
+        }
+
+        public String getDrink_price() {
             return drink_price;
+        }
+
+        public String getDrink_type() {
+            return drink_type;
+        }
+
+        public String getGender() {
+            return gender;
+        }
+
+        public String getKeyword() {
+            return keyword;
+        }
+
+    }
+
+    class Order {
+        String id;
+        String menu_ID;
+        String machine_ID;
+        String tel;
+        String pin;
+        String status;
+        String date;
+
+        Order(String id, String menu_ID, String machine_ID, String tel, String pin, String status, String date) {
+            this.id = id;
+            this.menu_ID = menu_ID;
+            this.machine_ID = machine_ID;
+            this.tel = tel;
+            this.pin = pin;
+            this.status = status;
+            this.date = date;
+        }
+
+        public String getDate() {
+            return date;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public String getMachine_ID() {
+            return machine_ID;
+        }
+
+        public String getMenu_ID() {
+            return menu_ID;
+        }
+
+        public String getPin() {
+            return pin;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public String getTel() {
+            return tel;
+        }
+    }
+
+    void add_OrderData(File datafile) throws FileNotFoundException {
+        try (Scanner OrderData_input = new Scanner(datafile)) {
+            String string_temp;
+            while (OrderData_input.hasNext()) {
+                string_temp = OrderData_input.nextLine();
+                String part[] = string_temp.split("\t");
+                new_ordeDrinks.add(new Order(part[0], part[1], part[2], part[3], part[4], part[5], part[6]));
+            }
         }
     }
 
     void add_DrinksData(File datafile) throws FileNotFoundException {
         try (Scanner DrinksData_input = new Scanner(datafile)) {
-            //String string_temp;
+            String string_temp;
             while (DrinksData_input.hasNext()) {
-                
+                string_temp = DrinksData_input.nextLine();
+                String part[] = string_temp.split("\t");
+                new_drinksData.add(new Drinks(part[0], part[1], part[2], part[3], part[4], part[5], part[6]));
             }
         }
     }
 
-    void show_drinks_menu(){
+    void show_drinks_menu() {
 
     }
 
-    void printDrinksData(){
+    void printDrinksData() throws FileNotFoundException {
+        File order_File = new File("C:\\Code\\PSP T_Apisit\\New_SEDrinks_copy\\Order.txt");
+        Scanner orderFile_reader = new Scanner(order_File);
+        String run_id = "";
+        while (orderFile_reader.hasNext()) {
+            String line = orderFile_reader.nextLine();
+            String[] part = line.split("\t");
+            run_id = part[0];
+        }
+        System.out.println("-------------------------------------- \n" + //
+                "ID\tMenu\t\t\tPrice\t\n" + //
+                "--------------------------------------\n" + //
+                "");
+        Collections.sort(new_drinksData,
+                (o1, o2) -> Integer.valueOf(o1.getDrink_price()) - Integer.valueOf(o2.getDrink_price()));
+
+        for (Drinks element : new_drinksData) {
+            String id = element.getDrink_ID();
+            String name = element.getDrink_name();
+            String price = element.getDrink_price();
+            System.out.printf("%s\t%-16s\t%s\n", id, name, price);
+
+        }
+        System.out.print("--------------------------------------\n" + //
+                "Enter Menu ID : ");
+        String input_ID = keyboard_input.next();
+        boolean check = false;
+        for (Drinks element : new_drinksData) {
+            if (element.getDrink_ID().equals(input_ID)) {
+                check = true;
+                break;
+            }
+        }
+        if (check) {
+            System.out.print("--------------------------------------\n" + //
+                    "Enter Tel. : ");
+
+            String input_tel = keyboard_input.next();
+            String sbTelephone;
+            sbTelephone = (input_tel.substring(0, 3) + "-" + input_tel.substring(3, 6) + "-"
+                    + input_tel.substring(6));
+            input_tel = sbTelephone;
+            String pin;
+            String NUMBER = "0123467890";
+            String CHARACTER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            StringBuilder sb = new StringBuilder(6);
+            SecureRandom random = new SecureRandom();
+
+            for (int i = 0; i < 6; i++) {
+                if (i < 4) {
+                    int randomIndex = random.nextInt(NUMBER.length());
+                    char randomChar = NUMBER.charAt(randomIndex);
+                    sb.append(randomChar);
+
+                } else {
+                    int randomIndex = random.nextInt(CHARACTER.length());
+                    char randomChar = CHARACTER.charAt(randomIndex);
+                    sb.append(randomChar);
+                }
+            }
+            pin = sb.toString();
+            System.out.printf("--------------------------------------\n" + //
+                    "Your PIN is : %s\n", pin);
+            try {
+                FileWriter userFileWriter = new FileWriter("C:\\Code\\PSP T_Apisit\\New_SEDrinks_copy\\Order.txt",
+                        true);
+                BufferedWriter bufferedWriter = new BufferedWriter(userFileWriter);
+                bufferedWriter.append("\n");
+                bufferedWriter.append(Integer.valueOf(run_id) + 1 + "\t" + input_ID + "\t-\t" + input_tel + "\t" + pin
+                        + "\t0" + "\t-");
+                new_ordeDrinks.add(new Order(String.valueOf(Integer.valueOf(run_id) + 1), input_ID, "-", input_tel, pin,
+                        "0", "-"));
+                bufferedWriter.close();
+                System.out.println("------------------------");
+                System.out.println("The user added sucessfully");
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+        }
+    }
+
+    static String getMenu_name(int id) {
+        String[] list_menu = { "Americano", "Cappuccino", "Chocolate frappe", "Espresso", "Fresh Milk",
+                "Green Tea with Milk", "Honey Black Coffee",
+                "Latte", "Lynchee Juice", "Thai Tea", "Pepsi", "Thai Beer", "Water", "Mineral Water", "Whisky", "Vodka",
+                "Red Wine" };
+        int index = 0;
+        for (int i = 0; i < list_menu.length ; i++) {
+            if (i+401 == id) {
+                index = i;
+                break;
+            }
+        }
+        return list_menu[index];
+    }
+
+    void pin_check() {
+        System.out.print("-------------------\n" + //
+                "     PIN Check\n" + //
+                "-------------------\n" + //
+                "Enter PIN :");
+        String enter_pin = keyboard_input.next();
+        int index = -1;
+        boolean check = false;
+        for (int i = 0; i < new_ordeDrinks.size(); i++) {
+            if (enter_pin.equals(new_ordeDrinks.get(i).getPin())) {
+                index = i;
+                check = true;
+                break;
+            }
+        }
+        if (check) {
+            System.out.println("-------------------\n" + //
+                    "Menu : " + getMenu_name(Integer.valueOf(new_ordeDrinks.get(index).getMenu_ID())));
+            String status = "Used";
+            if (new_ordeDrinks.get(index).getStatus().equals("0")) {
+                status = "Not yet used";
+            }
+            System.out.println("Status : " + status);
+        }else{
+            System.out.println("Invalid PIN.\n" + //
+                    "-------------------");
+        }
 
     }
-    
-    class Machine{
+
+    class Machine {
         String machine_id;
         String machine_city;
         String machine_position;
