@@ -11,10 +11,14 @@ import java.security.SecureRandom;
 import java.util.*;
 
 public class A_Function {
+    File userFile_data = new File("C:\\Code\\PSP T_Apisit\\Obtimized_SeDrink\\Login.txt");
+    File machineFile_data = new File("C:\\Code\\PSP T_Apisit\\Obtimized_SeDrink\\Machine.txt");
+    File order_File = new File("C:\\Code\\PSP T_Apisit\\Obtimized_SeDrink\\Order.txt");
+    File drinks_File = new File("C:\\Code\\PSP T_Apisit\\Obtimized_SeDrink\\Menu.txt");
+
     Scanner keyboard_input = new Scanner(System.in);
     Integer menu_input;
-    // ========================================= M A C H I N E
-    // =========================================//
+// ========================================= M A C H I N E =========================================
     LinkedList<Machine> machine_Data = new LinkedList<Machine>();
 
     class Machine {
@@ -54,8 +58,8 @@ public class A_Function {
         }
     }
 
-    void addMachine_Data(File filepath) throws FileNotFoundException {
-        try (Scanner machineData_input = new Scanner(filepath)) {
+    void addMachine_Data() throws FileNotFoundException {
+        try (Scanner machineData_input = new Scanner(machineFile_data)) {
             String string_temp;
             while (machineData_input.hasNext()) {
                 string_temp = machineData_input.nextLine();
@@ -104,19 +108,29 @@ public class A_Function {
     }
 
     void printMachineData_SortBalance() {
-        Collections.sort(machine_Data, (o1, o2) -> o1.getMachine_Balance() - o2.getMachine_Balance());
-        
+        Collections.sort(machine_Data, (o1, o2) -> o2.getMachine_Balance() - o1.getMachine_Balance());
         printMachineData();
     }
 
     void printMachineData_SortCity() {
         Collections.sort(machine_Data, (o1, o2) -> (o1.getMachine_City().compareTo(o2.getMachine_City())));
-        
         printMachineData();
     }
 
-    // ========================================= U S E R
-    // =========================================//
+    void call_machineFunction(){
+        do {
+            show_sort_menu();
+            menu_input = keyboard_input.nextInt();
+            if (menu_input==1) {
+                printMachineData_SortBalance();
+            }else if (menu_input==2) {
+                printMachineData_SortCity();
+            }else if (menu_input==3) {
+                return;
+            }
+        } while (menu_input!=3);
+    }
+// ========================================= U S E R =========================================
     LinkedList<User> user_Data = new LinkedList<User>();
     boolean password_check = false;
     boolean expire_check = true;
@@ -163,8 +177,8 @@ public class A_Function {
 
     }
 
-    void addUser_Data(File filepath) throws FileNotFoundException {
-        try (Scanner userData_input = new Scanner(filepath)) {
+    void addUser_Data() throws FileNotFoundException {
+        try (Scanner userData_input = new Scanner(userFile_data)) {
             String string_temp;
             while (userData_input.hasNext()) {
                 string_temp = userData_input.nextLine();
@@ -188,7 +202,6 @@ public class A_Function {
                 System.out.printf("Welcome : %s\nEmail : %s\nTel : %s\n", name, email, usertelephone);
             }
         }
-
     }
 
     void addMore_user() throws FileNotFoundException {
@@ -206,8 +219,7 @@ public class A_Function {
         System.out.print("Telephone number : ");
         String telephonee = keyboard_input.next();
 
-        File userData = new File("C:\\Code\\PSP T_Apisit\\Obtimized_SeDrink\\Login.txt");
-        Scanner userData_input = new Scanner(userData);
+        Scanner userData_input = new Scanner(userFile_data);
 
         if (first_name.length() >= 2 && last_name.length() >= 2 && password.length() == 6
                 && password.equals(confirm_password) && email.contains("@") == true && telephonee.length() == 10) {
@@ -258,7 +270,7 @@ public class A_Function {
             password = sb.toString();
             try {
                 FileWriter userFileWriter = new FileWriter(
-                        "C:\\Code\\PSP T_Apisit\\New_SEDrinks_copy\\Login.txt", true);
+                        "C:\\Code\\PSP T_Apisit\\Obtimized_SeDrink\\Login.txt", true);
                 BufferedWriter bufferedWriter = new BufferedWriter(userFileWriter);
                 bufferedWriter.append("\n");
                 bufferedWriter.append(
@@ -266,10 +278,12 @@ public class A_Function {
                 bufferedWriter.close();
                 System.out.println("------------------------");
                 System.out.print("The user added sucessfully");
+                addUser_Data();
             } catch (Exception e) {
                 System.out.println(e);
             }
         }
+        userData_input.close();
     }
 
     void editUser() throws FileNotFoundException {
@@ -277,7 +291,7 @@ public class A_Function {
         System.out.println("-------------------");
         System.out.print("Enter member ID : ");
         String id_input = keyboard_input.next();
-        String filePath = "C:\\Code\\PSP T_Apisit\\New_SEDrinks_copy\\Login.txt";
+        String filePath = "C:\\Code\\PSP T_Apisit\\Obtimized_SeDrink\\Login.txt";
 
         for (User element : user_Data) {
             String temp = element.getUser_Password();
@@ -345,10 +359,239 @@ public class A_Function {
         }
     }
 
-    // ========================================= M E N U
-    // =========================================//
+// ========================================= D R I N K S =========================================
+    LinkedList<Drink> drinks_data = new LinkedList<Drink>();
+    class Drink {
+        String drink_ID;
+        String drink_name;
+        String drink_price;
+        String drink_age;
+        String drink_gender;
+        String drink_type;
+        String drink_keyword;
+
+        Drink(String id, String name, String price, String age, String gender, String drink_type,String keyword){
+            this.drink_ID = id;
+            this.drink_name = name;
+            this.drink_price = price;
+            this.drink_age = age;
+            this.drink_gender = gender;
+            this.drink_type = drink_type;
+            this.drink_keyword = keyword;
+        }
+
+        public String getDrink_ID() {
+            return drink_ID;
+        }
+
+        public String getDrink_age() {
+            return drink_age;
+        }
+
+        public String getDrink_gender() {
+            return drink_gender;
+        }
+
+        public String getDrink_keyword() {
+            return drink_keyword;
+        }
+
+        public String getDrink_name() {
+            return drink_name;
+        }
+
+        public String getDrink_price() {
+            return drink_price;
+        }
+
+        public String getDrink_type() {
+            return drink_type;
+        }
+    }
+
+    void add_DrinksData() throws FileNotFoundException {
+        try (Scanner DrinksData_input = new Scanner(drinks_File)) {
+            String string_temp;
+            while (DrinksData_input.hasNext()) {
+                string_temp = DrinksData_input.nextLine();
+                String part[] = string_temp.split("\t");
+                drinks_data.add(new Drink(part[0], part[1], part[2], part[3], part[4], part[5], part[6]));
+            }
+        }
+    }
+    
+    void printDrinksData(){
+        System.out.print("|-----------------------------------------|\n" + //
+                "|  ID\t  Menu\t\t\tPrice\t  |\n" + //
+                "|-----------------------------------------|\n" + //
+                "");
+        Collections.sort(drinks_data, (o1, o2) -> Integer.valueOf(o1.getDrink_price()) - Integer.valueOf(o2.getDrink_price()));
+
+        for (Drink element : drinks_data) {
+            String id = element.getDrink_ID();
+            String name = element.getDrink_name();
+            String price = element.getDrink_price();
+            System.out.printf("|  %s\t  %-16s\t%s\t  |\n", id, name, price);
+        }
+        System.out.print("|-----------------------------------------|\n");
+    }
+
+    void orderDrink(){
+        String runID = order_data.get(order_data.size()-1).getOrder_id();
+        String input_ID = "";
+        System.out.print("Enter Menu ID : ");
+        input_ID = keyboard_input.next();
+        boolean check = false;
+        for (Drink element : drinks_data) {
+            if (input_ID.equals(element.getDrink_ID())) {
+                check = true;
+                break;
+            }
+        }
+        if (check) {
+            System.out.print("--------------------------------------\n" + //
+                    "Enter Tel. : ");
+
+            String input_tel = keyboard_input.next();
+            String sbTelephone;
+            sbTelephone = (input_tel.substring(0, 3) + "-" + input_tel.substring(3, 6) + "-"
+                    + input_tel.substring(6));
+            input_tel = sbTelephone;
+            String pin;
+            String NUMBER = "0123467890";
+            String CHARACTER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            StringBuilder sb = new StringBuilder(6);
+            SecureRandom random = new SecureRandom();
+
+            for (int i = 0; i < 6; i++) {
+                if (i < 4) {
+                    int randomIndex = random.nextInt(NUMBER.length());
+                    char randomChar = NUMBER.charAt(randomIndex);
+                    sb.append(randomChar);
+
+                } else {
+                    int randomIndex = random.nextInt(CHARACTER.length());
+                    char randomChar = CHARACTER.charAt(randomIndex);
+                    sb.append(randomChar);
+                }
+            }
+            pin = sb.toString();
+            System.out.printf("--------------------------------------\n" + "Your PIN is : %s\n", pin);
+            try {
+                FileWriter userFileWriter = new FileWriter("C:\\Code\\PSP T_Apisit\\Obtimized_SeDrink\\Order.txt",true);
+                BufferedWriter bufferedWriter = new BufferedWriter(userFileWriter);
+                bufferedWriter.append("\n");
+                bufferedWriter.append(Integer.valueOf(runID) + 1 + "\t" + input_ID + "\t-\t" + input_tel + "\t" + pin + "\t0" + "\t-");
+                order_data.add(new Order(String.valueOf(Integer.valueOf(runID) + 1), input_ID, "-", input_tel, pin,"0", "-"));
+                bufferedWriter.close();
+                System.out.println("------------------------");
+                System.out.println("Your order has been successfully ordered.");
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+    }
+
+    void orderPIN_check() throws FileNotFoundException{
+        System.out.print("-------------------\n" + "     PIN Check\n" + "-------------------\n" + "Enter PIN : ");
+        String enter_pin = keyboard_input.next();
+        boolean printcheck = false;
+        boolean validPinCheck = false;
+        for (Order element : order_data) {
+            if (enter_pin.equals(element.getOrder_pin())) {
+                String menu_name = "";
+                for (Drink drink_element : drinks_data) {
+                    if (drink_element.getDrink_ID().equals(element.getOrder_menu_ID())) {
+                        menu_name = drink_element.getDrink_name();
+                        break;
+                    }
+                }
+                System.out.println("-------------------");
+                System.out.printf("Menu : %s\n",menu_name);
+                if (element.getOrder_status().equals("0")) {
+                    System.out.println("Status : Not yet used");
+                    System.out.println("-------------------");
+                    printcheck = true;
+                    break;
+                }
+            }else{
+                validPinCheck = true;
+            }
+        }
+        if (!validPinCheck) {
+            System.out.println("-------------------\n" + //
+                    "Invalid PIN.\n" + //
+                    "-------------------");
+        }
+        if (!printcheck&&!validPinCheck) {
+            System.out.println("Status : Used");
+            System.out.println("-------------------");
+        }
+        
+    }
+// ========================================= O R D E R =========================================
+    LinkedList<Order> order_data = new LinkedList<Order>();
+    class Order {
+        String order_id;
+        String order_menu_ID;
+        String order_machine_ID;
+        String order_telephone;
+        String order_pin;
+        String order_status;
+        String order_date;
+
+        Order(String id, String menu_ID, String machine_ID, String tel, String pin, String status, String date){
+            this.order_id = id;
+            this.order_menu_ID = menu_ID;
+            this.order_machine_ID = machine_ID;
+            this.order_telephone = tel;
+            this.order_pin = pin;
+            this.order_status = status;
+            this.order_date = date;
+        }
+
+        public String getOrder_date() {
+            return order_date;
+        }
+
+        public String getOrder_id() {
+            return order_id;
+        }
+
+        public String getOrder_machine_ID() {
+            return order_machine_ID;
+        }
+
+        public String getOrder_menu_ID() {
+            return order_menu_ID;
+        }
+
+        public String getOrder_pin() {
+            return order_pin;
+        }
+
+        public String getOrder_status() {
+            return order_status;
+        }
+
+        public String getOrder_telephone() {
+            return order_telephone;
+        }
+    }
+
+    void add_OrderData() throws FileNotFoundException {
+        try (Scanner OrderData_input = new Scanner(order_File)) {
+            String string_temp;
+            while (OrderData_input.hasNext()) {
+                string_temp = OrderData_input.nextLine();
+                String part[] = string_temp.split("\t");
+                order_data.add(new Order(part[0], part[1], part[2], part[3], part[4], part[5], part[6]));
+            }
+        }
+    }
+
+    // ========================================= M E N U =========================================
     void show_menu() {
-        System.out.println();
         System.out.println("------------------------");
         System.out.println("          menu          ");
         System.out.println("------------------------");
@@ -415,7 +658,7 @@ public class A_Function {
                         String name = String.join(". ", nameSplit[0].substring(0, 1), nameSplit[1]);
                         String usertelephone = element.getUser_Telephone().replace(element.getUser_Telephone().substring(8),"xxxx");
                         String email = element.getUser_Email();
-                        System.out.printf("Welcome : %s\nEmail : %s\nTel : %s\n", name, email, usertelephone);
+                        System.out.printf("Welcome : %s\nEmail : %s\nTel : %s", name, email, usertelephone);
                         break;
                     }
                 }
@@ -430,8 +673,18 @@ public class A_Function {
         }
     }
 
-    // ========================================= F I L E E D I T O R
-    // =========================================//
+    void show_mainMenu() {
+        System.out.print("-------------------\n" + //
+                "   SE BUU Drink\n" + //
+                "-------------------\n" + //
+                "1. Ordering your drink\n" + //
+                "2. PIN Check\n" + //
+                "3. Login\n" + //
+                "4. Exit\n" + //
+                "-------------------\n" + //
+                "Enter Number : ");
+    }
+// ========================================= F I L E E D I T O R =========================================
     void fileEditer(String filePath, String oldString, String newString) {
 
         File fileToBeModified = new File(filePath);
