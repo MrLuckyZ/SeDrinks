@@ -277,7 +277,7 @@ public class A_Function {
                         id + "\t" + first_name + " " + last_name + "\t" + email + "\t" + password + "\t" + telephonee);
                 bufferedWriter.close();
                 System.out.println("------------------------");
-                System.out.print("The user added sucessfully");
+                System.out.print("The user added sucessfully\n");
                 addUser_Data();
             } catch (Exception e) {
                 System.out.println(e);
@@ -332,7 +332,7 @@ public class A_Function {
                         new_randompassword = random_password.substring(0, 3) + sb.substring(0, 2)
                                 + random_password.substring(5, 11) + sb.substring(2, 6) + random_password.substring(15);
                         fileEditer(filePath, temp, new_randompassword);
-                        System.out.printf("This password has been successfully reset. =>  New password is \"%s\"", sb);
+                        System.out.printf("This password has been successfully reset. =>  New password is \"%s\"\n", sb);
                         return;
                     } else if (reset_confirm == 'N') {
                         return;
@@ -438,6 +438,7 @@ public class A_Function {
 
     void orderDrink(){
         String runID = order_data.get(order_data.size()-1).getOrder_id();
+        printDrinksData();
         String input_ID = "";
         System.out.print("Enter Menu ID : ");
         input_ID = keyboard_input.next();
@@ -493,6 +494,7 @@ public class A_Function {
     }
 
     void orderPIN_check() throws FileNotFoundException{
+        add_DrinksData();
         System.out.print("-------------------\n" + "     PIN Check\n" + "-------------------\n" + "Enter PIN : ");
         String enter_pin = keyboard_input.next();
         boolean printcheck = false;
@@ -658,7 +660,7 @@ public class A_Function {
                         String name = String.join(". ", nameSplit[0].substring(0, 1), nameSplit[1]);
                         String usertelephone = element.getUser_Telephone().replace(element.getUser_Telephone().substring(8),"xxxx");
                         String email = element.getUser_Email();
-                        System.out.printf("Welcome : %s\nEmail : %s\nTel : %s", name, email, usertelephone);
+                        System.out.printf("Welcome : %s\nEmail : %s\nTel : %s\n", name, email, usertelephone);
                         break;
                     }
                 }

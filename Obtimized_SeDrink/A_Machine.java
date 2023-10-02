@@ -35,6 +35,7 @@ public class A_Machine extends A_Function {
                 } while (menu_input != 4);
             }
         } while (menu_input!=4);
+        System.out.println("Thank you for using the service.");
         keyboard_input.close();
     }
 }
