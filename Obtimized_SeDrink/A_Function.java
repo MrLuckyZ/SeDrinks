@@ -18,7 +18,8 @@ public class A_Function {
 
     Scanner keyboard_input = new Scanner(System.in);
     Integer menu_input;
-// ========================================= M A C H I N E =========================================
+    // ========================================= M A C H I N E
+    // =========================================
     LinkedList<Machine> machine_Data = new LinkedList<Machine>();
 
     class Machine {
@@ -117,20 +118,22 @@ public class A_Function {
         printMachineData();
     }
 
-    void call_machineFunction(){
+    void call_machineFunction() {
         do {
             show_sort_menu();
             menu_input = keyboard_input.nextInt();
-            if (menu_input==1) {
+            if (menu_input == 1) {
                 printMachineData_SortBalance();
-            }else if (menu_input==2) {
+            } else if (menu_input == 2) {
                 printMachineData_SortCity();
-            }else if (menu_input==3) {
+            } else if (menu_input == 3) {
                 return;
             }
-        } while (menu_input!=3);
+        } while (menu_input != 3);
     }
-// ========================================= U S E R =========================================
+
+    // ========================================= U S E R
+    // =========================================
     LinkedList<User> user_Data = new LinkedList<User>();
     boolean password_check = false;
     boolean expire_check = true;
@@ -332,7 +335,8 @@ public class A_Function {
                         new_randompassword = random_password.substring(0, 3) + sb.substring(0, 2)
                                 + random_password.substring(5, 11) + sb.substring(2, 6) + random_password.substring(15);
                         fileEditer(filePath, temp, new_randompassword);
-                        System.out.printf("This password has been successfully reset. =>  New password is \"%s\"\n", sb);
+                        System.out.printf("This password has been successfully reset. =>  New password is \"%s\"\n",
+                                sb);
                         return;
                     } else if (reset_confirm == 'N') {
                         return;
@@ -348,19 +352,22 @@ public class A_Function {
         for (User element : user_Data) {
             String temp_password = element.getUser_Password();
             temp_password = String.join("", temp_password.substring(3, 5), temp_password.substring(11, 15));
-            if (element.getUser_Email().equals(user) && password.equals(temp_password) && element.getUser_expiredDate().equals("1")) {
+            if (element.getUser_Email().equals(user) && password.equals(temp_password)
+                    && element.getUser_expiredDate().equals("1")) {
                 password_check = true;
                 expire_check = false;
-            }
-            else if (element.getUser_Email().equals(user) && password.equals(temp_password) && element.getUser_expiredDate().equals("0")) {
+            } else if (element.getUser_Email().equals(user) && password.equals(temp_password)
+                    && element.getUser_expiredDate().equals("0")) {
                 password_check = true;
                 expire_check = true;
             }
         }
     }
 
-// ========================================= D R I N K S =========================================
+    // ========================================= D R I N K S
+    // =========================================
     LinkedList<Drink> drinks_data = new LinkedList<Drink>();
+
     class Drink {
         String drink_ID;
         String drink_name;
@@ -370,7 +377,7 @@ public class A_Function {
         String drink_type;
         String drink_keyword;
 
-        Drink(String id, String name, String price, String age, String gender, String drink_type,String keyword){
+        Drink(String id, String name, String price, String age, String gender, String drink_type, String keyword) {
             this.drink_ID = id;
             this.drink_name = name;
             this.drink_price = price;
@@ -419,13 +426,14 @@ public class A_Function {
             }
         }
     }
-    
-    void printDrinksData(){
+
+    void printDrinksData() {
         System.out.print("|-----------------------------------------|\n" + //
                 "|  ID\t  Menu\t\t\tPrice\t  |\n" + //
                 "|-----------------------------------------|\n" + //
                 "");
-        Collections.sort(drinks_data, (o1, o2) -> Integer.valueOf(o1.getDrink_price()) - Integer.valueOf(o2.getDrink_price()));
+        Collections.sort(drinks_data,
+                (o1, o2) -> Integer.valueOf(o1.getDrink_price()) - Integer.valueOf(o2.getDrink_price()));
 
         for (Drink element : drinks_data) {
             String id = element.getDrink_ID();
@@ -436,8 +444,8 @@ public class A_Function {
         System.out.print("|-----------------------------------------|\n");
     }
 
-    void orderDrink(){
-        String runID = order_data.get(order_data.size()-1).getOrder_id();
+    void orderDrink() {
+        String runID = order_data.get(order_data.size() - 1).getOrder_id();
         printDrinksData();
         String input_ID = "";
         System.out.print("Enter Menu ID : ");
@@ -479,11 +487,14 @@ public class A_Function {
             pin = sb.toString();
             System.out.printf("--------------------------------------\n" + "Your PIN is : %s\n", pin);
             try {
-                FileWriter userFileWriter = new FileWriter("C:\\Code\\PSP T_Apisit\\Obtimized_SeDrink\\Order.txt",true);
+                FileWriter userFileWriter = new FileWriter("C:\\Code\\PSP T_Apisit\\Obtimized_SeDrink\\Order.txt",
+                        true);
                 BufferedWriter bufferedWriter = new BufferedWriter(userFileWriter);
                 bufferedWriter.append("\n");
-                bufferedWriter.append(Integer.valueOf(runID) + 1 + "\t" + input_ID + "\t-\t" + input_tel + "\t" + pin + "\t0" + "\t-");
-                order_data.add(new Order(String.valueOf(Integer.valueOf(runID) + 1), input_ID, "-", input_tel, pin,"0", "-"));
+                bufferedWriter.append(Integer.valueOf(runID) + 1 + "\t" + input_ID + "\t-\t" + input_tel + "\t" + pin
+                        + "\t0" + "\t-");
+                order_data.add(
+                        new Order(String.valueOf(Integer.valueOf(runID) + 1), input_ID, "-", input_tel, pin, "0", "-"));
                 bufferedWriter.close();
                 System.out.println("------------------------");
                 System.out.println("Your order has been successfully ordered.");
@@ -493,7 +504,7 @@ public class A_Function {
         }
     }
 
-    void orderPIN_check() throws FileNotFoundException{
+    void orderPIN_check() throws FileNotFoundException {
         add_DrinksData();
         System.out.print("-------------------\n" + "     PIN Check\n" + "-------------------\n" + "Enter PIN : ");
         String enter_pin = keyboard_input.next();
@@ -509,14 +520,14 @@ public class A_Function {
                     }
                 }
                 System.out.println("-------------------");
-                System.out.printf("Menu : %s\n",menu_name);
+                System.out.printf("Menu : %s\n", menu_name);
                 if (element.getOrder_status().equals("0")) {
                     System.out.println("Status : Not yet used");
                     System.out.println("-------------------");
                     printcheck = true;
                     break;
                 }
-            }else{
+            } else {
                 validPinCheck = true;
             }
         }
@@ -525,14 +536,136 @@ public class A_Function {
                     "Invalid PIN.\n" + //
                     "-------------------");
         }
-        if (!printcheck&&!validPinCheck) {
+        if (!printcheck && !validPinCheck) {
             System.out.println("Status : Used");
             System.out.println("-------------------");
         }
-        
+
     }
-// ========================================= O R D E R =========================================
+
+    LinkedList<PopularDrink> popularDrinksMen_data = new LinkedList<PopularDrink>();
+    LinkedList<PopularDrink> popularDrinksMale_data = new LinkedList<PopularDrink>();
+    LinkedList<PopularDrink> popularDrinksAll_data = new LinkedList<PopularDrink>();
+
+    class PopularDrink {
+        String id;
+        String name;
+        int count;
+
+        PopularDrink(String id, String name, int count) {
+            this.name = name;
+            this.count = count;
+            this.id = id;
+        }
+
+        public int getCount() {
+            return count;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getId() {
+            return id;
+        }
+    }
+
+    void printMostPopularDrink_men() {
+        int count = 0;
+        for (Drink drink_element : drinks_data) {
+            if (drink_element.getDrink_gender().equals("M")) {
+                for (Order order_element : order_data) {
+                    if (order_element.getOrder_menu_ID().equals(drink_element.getDrink_ID())) {
+                        count++;
+                    }
+                }
+                popularDrinksMen_data.add(new PopularDrink(drink_element.getDrink_ID(), drink_element.getDrink_name(), count));
+                count=0;
+            }
+        }
+        Collections.sort(popularDrinksMen_data, (o1, o2) -> o2.getCount() - o1.getCount());
+        System.out.println("--------------------\n" + //
+                "Top 3 For-Men");
+        System.out.println("--------------------");
+        int loop = 1;
+        try {
+            for (int index = 0; index < 3; index++) {
+                System.out.printf("# %d : %s %s\n", loop++, popularDrinksMen_data.get(index).getId(),
+                        popularDrinksMen_data.get(index).getName());
+            }
+            System.out.println("--------------------");
+        } catch (Exception e) {
+            System.out.println("No more Popular Drinks");
+        }
+
+    }
+
+    void printMostPopularDrink_male() {
+        int count = 0;
+        for (Drink drink_element : drinks_data) {
+            if (drink_element.getDrink_gender().equals("F")) {
+                for (Order order_element : order_data) {
+                    if (order_element.getOrder_menu_ID().equals(drink_element.getDrink_ID())) {
+                        count++;
+                    }
+                }
+                popularDrinksMale_data.add(new PopularDrink(drink_element.getDrink_ID(), drink_element.getDrink_name(), count));
+                count=0;
+            }
+        }
+        Collections.sort(popularDrinksMale_data, (o1, o2) -> o2.getCount() - o1.getCount());
+        System.out.println("--------------------\n" + //
+                "Top 3 For-Women");
+        System.out.println("--------------------");
+        int loop = 1;
+        try {
+            for (int index = 0; index < 3; index++) {
+                System.out.printf("# %d : %s %s\n", loop++, popularDrinksMale_data.get(index).getId(),
+                        popularDrinksMale_data.get(index).getName());
+            }
+            System.out.println("--------------------");
+        } catch (Exception e) {
+            System.out.println("No more Popular Drinks");
+        }
+
+    }
+
+    void printMostPopularDrink_all() {
+        int count = 0;
+        for (Drink drink_element : drinks_data) {
+            if (drink_element.getDrink_gender().equals("A")) {
+                for (Order order_element : order_data) {
+                    if (order_element.getOrder_menu_ID().equals(drink_element.getDrink_ID())) {
+                        count++;
+                    }
+                }
+                popularDrinksAll_data.add(new PopularDrink(drink_element.getDrink_ID(), drink_element.getDrink_name(), count));
+                count=0;
+            }
+        }
+
+        Collections.sort(popularDrinksAll_data, (o1, o2) -> o2.getCount() - o1.getCount());
+        System.out.println("--------------------\n" + //
+                "Top 3 For-All");
+        System.out.println("--------------------");
+        int loop = 1;
+        try {
+            for (int index = 0; index < 3; index++) {
+                System.out.printf("# %d : %s %s\n", loop++, popularDrinksAll_data.get(index).getId(),
+                        popularDrinksAll_data.get(index).getName());
+            }
+        } catch (Exception e) {
+            System.out.println("No more Popular Drinks");
+        }
+
+        System.out.println("--------------------");
+    }
+
+    // ========================================= O R D E R
+    // =========================================
     LinkedList<Order> order_data = new LinkedList<Order>();
+
     class Order {
         String order_id;
         String order_menu_ID;
@@ -542,7 +675,7 @@ public class A_Function {
         String order_status;
         String order_date;
 
-        Order(String id, String menu_ID, String machine_ID, String tel, String pin, String status, String date){
+        Order(String id, String menu_ID, String machine_ID, String tel, String pin, String status, String date) {
             this.order_id = id;
             this.order_menu_ID = menu_ID;
             this.order_machine_ID = machine_ID;
@@ -592,7 +725,8 @@ public class A_Function {
         }
     }
 
-    // ========================================= M E N U =========================================
+    // ========================================= M E N U
+    // =========================================
     void show_menu() {
         System.out.println("------------------------");
         System.out.println("          menu          ");
@@ -652,23 +786,22 @@ public class A_Function {
             if (expire_check && password_check) {
                 System.out.println("The users account has expired");
                 break;
-            }
-            else if (password_check && !expire_check) {
+            } else if (password_check && !expire_check) {
                 for (User element : user_Data) {
                     if (element.getUser_Email().equals(user_input)) {
                         String[] nameSplit = element.getUser_Name().split(" ");
                         String name = String.join(". ", nameSplit[0].substring(0, 1), nameSplit[1]);
-                        String usertelephone = element.getUser_Telephone().replace(element.getUser_Telephone().substring(8),"xxxx");
+                        String usertelephone = element.getUser_Telephone()
+                                .replace(element.getUser_Telephone().substring(8), "xxxx");
                         String email = element.getUser_Email();
                         System.out.printf("Welcome : %s\nEmail : %s\nTel : %s\n", name, email, usertelephone);
                         break;
                     }
                 }
                 break;
-            }
-            else {
-                System.out.printf("The username or password is incorrect. (%d)\n",i);
-                if (i==3) {
+            } else {
+                System.out.printf("The username or password is incorrect. (%d)\n", i);
+                if (i == 3) {
                     return;
                 }
             }
@@ -681,12 +814,26 @@ public class A_Function {
                 "-------------------\n" + //
                 "1. Ordering your drink\n" + //
                 "2. PIN Check\n" + //
-                "3. Login\n" + //
-                "4. Exit\n" + //
+                "3. Most popular drink\n" + //
+                "4. Login\n" + //
+                "5. Exit\n" + //
                 "-------------------\n" + //
                 "Enter Number : ");
     }
-// ========================================= F I L E E D I T O R =========================================
+
+    void show_populardrinkMenu(){
+        System.out.println("--------------------");
+        System.out.print("Most popular drink\n" + //
+                "-------------------\n" + //
+                "1. For-Men\n" + //
+                "2. For-Women\n" + //
+                "3. For-All\n" + //
+                "4. Exit\n" + //
+                "--------------------\n");
+        System.out.print("Enter Number : ");
+    }
+    // ========================================= F I L E E D I T O R
+    // =========================================
     void fileEditer(String filePath, String oldString, String newString) {
 
         File fileToBeModified = new File(filePath);

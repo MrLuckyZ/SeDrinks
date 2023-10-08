@@ -2,9 +2,9 @@
 402	Cappuccino	60	12	A	SD	Coffee, Non-alcoholic, Milk
 403	Chocolate frappe	70	2	A	SD	Non-alcoholic, Syrup, Chocolate
 404	Espresso	80	12	A	SD	Coffee, Non-alcoholic
-405	Fresh Milk	20	1	A	SD	Non-alcoholic, Milk
+405	Fresh Milk	20	1	F	SD	Non-alcoholic, Milk
 406	Green Tea with Milk	40	3	A	SD	Non-alcoholic, Tea, Milk
-407	Honey Black Coffee	85	12	A	SD	Coffee, Non-alcoholic, Honey
+407	Honey Black Coffee	85	12	F	SD	Coffee, Non-alcoholic, Honey
 408	Latte	65	12	A	SD	Coffee, Non-alcoholic, Milk
 409	Lynchee Juice	55	6	F	SD	Non-alcoholic, Fruit, Syrup
 410	Thai Tea	45	3	A	SD	Non-alcoholic, Tea, Milk

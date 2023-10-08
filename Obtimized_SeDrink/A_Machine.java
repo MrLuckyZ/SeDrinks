@@ -17,24 +17,44 @@ public class A_Machine extends A_Function {
             menu_input = keyboard_input.nextInt();
             if (menu_input==1) {
                 machine.orderDrink();
-            }else if (menu_input==2) {
+            }
+            else if (menu_input==2) {
                 machine.orderPIN_check();
-            }else if (menu_input==3) {
+            }
+            else if (menu_input==3) {
+                machine.show_populardrinkMenu();
+                menu_input = keyboard_input.nextInt();
+                if (menu_input==1) {
+                    machine.printMostPopularDrink_men();
+                }
+                else if (menu_input==2) {
+                    machine.printMostPopularDrink_male();
+                }
+                else if (menu_input==3) {
+                    machine.printMostPopularDrink_all();
+                }
+                else if (menu_input==4) {
+                    
+                }
+            }
+            else if (menu_input==4) {
                 machine.show_loginMenu();
                 do {
                     machine.show_menu();
                     menu_input = keyboard_input.nextInt();
                     if (menu_input == 1) {
                         machine.call_machineFunction();
-                    } else if (menu_input == 2) {
+                    }
+                    else if (menu_input == 2) {
                         machine.addMore_user();;
                         machine.addUser_Data();
-                    } else if (menu_input == 3) {
+                    }
+                    else if (menu_input == 3) {
                         machine.editUser();
                     }
                 } while (menu_input != 4);
             }
-        } while (menu_input!=4);
+        } while (menu_input!=5);
         System.out.println("Thank you for using the service.");
         keyboard_input.close();
     }
